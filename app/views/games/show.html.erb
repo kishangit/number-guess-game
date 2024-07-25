@@ -1,0 +1,35 @@
+<div>
+  <label><%= @game.allowed_attempts_for_the_game - @game.attempts_count %> Attempts remaining.</label>
+  <label>Game started <%= time_ago_in_words @game.created_at %> ago</label>
+</div>
+
+<div>
+  <% if @game.is_won == false %>
+    <div>You lost this game!!!</div>
+  <% elsif @game.is_won.nil? %>
+    <%= form_with(model: @game, url: attempted_answer_game_path(@game), method: :patch, local: true, class: 'm-3 w-max flex items-center') do |form| %>
+      <div class="field flex items-center mx-2">
+        <%= form.label "Your guess", class: 'text-nowrap' %>&nbsp;
+        <%= form.number_field :attempted_answer, class: 'devise-input', autofocus: true %>
+      </div>
+
+      <div class="actions mx-2">
+        <%= form.submit "Try!", class: 'devise-link' %>
+      </div>
+    <% end %>
+  <% else %>
+    <div>Yayyyy!! You won this game!!!</div>
+  <% end %>
+</div>
+
+<div class="m-3 w-max items-center grid grid-cols-1 gap-2">
+
+  <% @game.game_responses.split(',').map(&:strip).reverse.zip(@game.user_attempts.split(',').map(&:strip).reverse) do |gr, ua| %>
+    <div class="my-1">
+      <div>You guessed: <%= ua %></div>
+      <div>Correctly guessed numbers with right position: <%= gr[0] %></div>
+      <div>Correctly guessed numbers with wrong position: <%= gr[-1] %></div>
+    </div>
+  <% end %>
+
+</div>

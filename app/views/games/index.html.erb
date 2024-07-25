@@ -1,0 +1,26 @@
+<div class="m-10 px-5 grid grid-cols-1 gap-2 leading-loose min-w-96">
+  <div>
+    <h2 class="devise-form-header inline">Number Guessing Game</h2>
+      <%= link_to "New Game", new_game_path, class: "w-max rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 float-right" %>
+  </div>
+</div>
+
+<div>
+  <% @games.each do |game| %>
+    <div class="mx-10 my-1 p-3 grid grid-cols-1 odd:bg-indigo-100 even:bg-indigo-200 rounded-md hover:bg-indigo-400">
+      <div>
+        <% if game.is_won %>
+          <label>You won this game in <%= game.attempts_count %> attempts.</label>
+        <% elsif game.is_won.nil? %>
+          <label>Game is still runnig you can continue playing the game</label>
+        <% else %>
+          <label>You lost this game</label>
+        <% end %>
+        <div class="float-right flex gap-1">
+          <%= link_to game.button_label, game_path(game), class: 'devise-link float-right max-w-max' %>
+          <%= button_to "Delete this game", game, method: :delete, class: 'devise-link float-right max-w-max mr-2', data: { turbo_confirm: "Are you sure?"} %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

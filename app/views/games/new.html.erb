@@ -1,0 +1,13 @@
+<div class="w-max m-3">
+  <%= form_with(model: @game, local: true, class: "flex items-baseline") do |form| %>
+    <div class="field mb-3 flex items-center">
+      <%= form.label "User attempts", class: 'text-lg text-nowrap m-3' %>
+      <%= form.number_field :allowed_attempts_for_the_game, class: 'devise-input', value: 100 %>
+    </div>
+
+    <div class="actions mx-1">
+      <%= form.submit "Start Game", class: 'devise-link' %>
+    </div>
+  <% end %>
+</div>
+

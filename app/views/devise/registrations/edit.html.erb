@@ -1,0 +1,49 @@
+<div class="center-form-div ">
+<div>
+  <%= render "devise/shared/error_messages", resource: resource %>
+</div>
+  <h2 class="devise-form-header">Edit <%= resource_name.to_s.humanize %></h2>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+
+    <div class="field mb-3">
+      <%= f.label :your_email, class: "text-lg" %><i>(you can not change it)<i><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", default: current_user.email, readonly: true, class: 'devise-input disabled:opacity-75' %>
+    </div>
+
+    <div>
+      <%= f.label :first_name, class: "text-lg" %>
+      <%= f.text_field :first_name, autocomplete: "first_name", class: 'devise-input' %>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+
+    <div class="field mb-3">
+      <%= f.label :new_password, class: "text-lg"%><br />
+      <%= f.password_field :password, autocomplete: "new-password", class: 'devise-input' %>
+      <% if @minimum_password_length %>
+        <em><%= @minimum_password_length %> characters minimum</em>
+      <% end %>
+    </div>
+
+    <div class="field mb-3">
+      <%= f.label :password_confirmation, class: "text-lg" %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'devise-input' %>
+    </div>
+
+    <div class="field mb-3">
+      <%= f.label "Current Password (we need your current password to confirm your changes)", class: "text-lg display-inline" %><br />
+      <%= f.password_field :current_password, autocomplete: "current-password", class: 'devise-input' %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Update", class: "mt-5 devise-link" %>
+    </div>
+  <% end %>
+  <br />
+  <div class="float-right">
+    <%= link_to "Back", :back, class: "devise-link mt-5 bg-indigo-200" %>
+    <%= link_to "Delete my account", registration_path(resource_name), method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?", turbo_method: :delete }, class: "devise-link mt-5 bg-red-300 hover:bg-red-600" %>
+  </div>
+</div>
